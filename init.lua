@@ -34,20 +34,15 @@ function toolranks.create_description(name, uses, level)
   return newdesc
 end
 
+function toolranks.log2(value)
+  local factor = 2
+  return math.log(value) / math.log(factor)
+end
+
 function toolranks.get_level(uses)
-  if uses <= 200 then
-    return 1
-  elseif uses < 400 then
-    return 2
-  elseif uses < 1000 then
-    return 3
-  elseif uses < 2000 then
-    return 4
-  elseif uses < 3200 then
-    return 5
-  else
-    return 6
-  end
+  local scale = 100
+  level = math.ceil(toolranks.log2(uses / scale))
+  return math.max(level,0)
 end
 
 function toolranks.new_afteruse(itemstack, user, node, digparams)
@@ -88,7 +83,9 @@ function toolranks.new_afteruse(itemstack, user, node, digparams)
   if lastlevel < level then
     local levelup_text = "Your " .. toolranks.colors.green ..
                          itemdesc .. toolranks.colors.white ..
-                         " just leveled up!"
+                         " just leveled up to " ..
+                         toolranks.colors.green .. "level " ..
+                         level .. toolranks.colors.white .. "!"
     minetest.sound_play("toolranks_levelup", {
       to_player = user:get_player_name(),
       gain = 2.0,
