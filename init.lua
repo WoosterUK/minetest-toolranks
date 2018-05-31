@@ -41,7 +41,7 @@ end
 
 function toolranks.get_level(uses)
   local scale = 100
-  level = math.ceil(toolranks.log2(uses / scale))
+  level = math.floor(toolranks.log2(uses / scale))
   return math.max(level,0)
 end
 
