@@ -39,11 +39,8 @@ function toolranks.log2(value)
 end
 
 function toolranks.get_level(uses)
-  level = math.ceil(toolranks.log2(uses / 100)) + 1
-  if level < 1 then
-    level = 1
-  end
-  return level
+  level = math.ceil(toolranks.log2(uses / 100))
+  return math.max(level,0)
 end
 
 function toolranks.new_afteruse(itemstack, user, node, digparams)
