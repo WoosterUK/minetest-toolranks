@@ -35,11 +35,13 @@ function toolranks.create_description(name, uses, level)
 end
 
 function toolranks.log2(value)
-  return math.log(value) / math.log(2)
+  local factor = 2
+  return math.log(value) / math.log(factor)
 end
 
 function toolranks.get_level(uses)
-  level = math.ceil(toolranks.log2(uses / 100))
+  local scale = 100
+  level = math.ceil(toolranks.log2(uses / scale))
   return math.max(level,0)
 end
 
